@@ -167,6 +167,39 @@ else:
             f"({st.session_state.role})"
         )
 
+        st.subheader("Add a document")
+        st.caption("Engineering uploads are visible to Engineering, HR, and C-Level. HR uploads are visible to HR and C-Level. C-Level uploads are visible only to C-Level.")
+        uploaded_file = st.file_uploader(
+            "Choose a TXT, Markdown, CSV, or PDF file",
+            type=["txt", "md", "csv", "pdf"],
+            key="document_upload",
+        )
+        if st.button("Upload document", disabled=uploaded_file is None):
+            try:
+                upload_response = requests.post(
+                    f"{BACKEND_URL}/documents/upload",
+                    files={
+                        "file": (
+                            uploaded_file.name,
+                            uploaded_file.getvalue(),
+                            uploaded_file.type or "application/octet-stream",
+                        )
+                    },
+                    headers=authorization_headers(),
+                    timeout=120,
+                )
+                if upload_response.status_code == 200:
+                    result = upload_response.json()
+                    st.success(
+                        f"Indexed {result['filename']} ({result['indexed_chunks']} chunks). "
+                        f"Visible to: {', '.join(result['visible_to'])}."
+                    )
+                else:
+                    detail = upload_response.json().get("detail", "Upload failed.")
+                    st.error(detail)
+            except requests.RequestException:
+                st.error("Cannot connect to the backend server.")
+
         # Clear chat button
         if st.button("🗑️ Clear Chat", type="secondary"):
             st.session_state.messages = []

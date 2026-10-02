@@ -36,9 +36,9 @@ cd backend
 uv run python build_vector_db.py --reset
 ```
 
-The script reads `training/data`, creates Markdown and CSV documents, attaches `access_level`, `source_file`, and `source` metadata, embeds them with `GEMINI_EMBEDDING_MODEL`, and persists the collection to `VECTOR_DB_PATH`.
+The script reads `training/data`, creates Markdown and CSV documents, attaches `access_level`, `source_file`, and `source` metadata, embeds them with the local `LOCAL_EMBEDDING_MODEL` (`sentence-transformers/all-MiniLM-L6-v2` by default), and persists the collection to `VECTOR_DB_PATH`.
 
-The indexed embedding model is recorded in Chroma metadata. The backend refuses to query a collection whose recorded model is missing or differs from configuration. Rebuild with `--reset` after changing `GEMINI_EMBEDDING_MODEL`.
+The indexed embedding model is recorded in Chroma metadata. The backend refuses to query a collection whose recorded model is missing or differs from configuration. Rebuild with `--reset` after changing `LOCAL_EMBEDDING_MODEL`.
 
 ## Run
 
@@ -54,6 +54,12 @@ uv run streamlit run main.py
 
 The backend binds to `0.0.0.0` and uses `BACKEND_PORT`. The frontend uses `BACKEND_URL`. CORS origins are configured with comma-separated `ALLOWED_ORIGINS`.
 
+## User Uploads
+
+After login, use **Add a document** in the sidebar to upload a TXT, Markdown, CSV, or text-based PDF file up to 10 MB. The backend indexes it in the existing Chroma collection and assigns its access level from the authenticated account; clients cannot choose or elevate that level.
+
+Visibility follows the role hierarchy: Engineering uploads are visible to Engineering, HR, and C-Level; HR uploads are visible to HR and C-Level; C-Level uploads are visible only to C-Level. New uploads are available immediately and do not require rebuilding the source-data index. Scanned PDFs without extractable text are not supported.
+
 ## Demo Accounts and RBAC
 
 These credentials are intentionally created for local demonstration only:
@@ -64,7 +70,7 @@ These credentials are intentionally created for local demonstration only:
 | Engineering | Tony | `password123` | Engineering documents |
 | C-Level | Shashank | `password123` | All indexed document classes under the prototype executive policy |
 
-The frontend displays the authenticated username and role returned by the backend. It never sends a role or access level. Authorization is derived from the signed token and enforced before documents reach the LLM.
+The frontend displays the authenticated username and role returned by the backend. It never sends a role or access level. Authorization is derived from the signed token and enforced before documents reach the LLM. Higher roles inherit access to documents uploaded by lower roles; lower roles cannot access higher-level uploads.
 
 ## API
 

@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, HTTPException, Depends, status, Request
+from fastapi import FastAPI, HTTPException, Depends, File, UploadFile, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -14,6 +14,8 @@ from auth import (
     decode_access_token,
 )
 from dotenv import load_dotenv
+from services.documents import MAX_UPLOAD_SIZE, index_uploaded_file
+from rbac import accessible_document_levels
 
 load_dotenv()
 app = FastAPI()
@@ -175,6 +177,39 @@ def query(request: ChatRequest, user=Depends(get_current_user)):
         "answer": answer.get("answer", "Unable to process the question."),
         "sources": answer.get("sources", []),
         "user": user
+    }
+
+
+@app.post("/documents/upload")
+async def upload_document(
+    file: UploadFile = File(...),
+    user=Depends(get_current_user),
+):
+    """Index an uploaded document using the authenticated user's access level."""
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="A filename is required.")
+
+    content = await file.read(MAX_UPLOAD_SIZE + 1)
+    if len(content) > MAX_UPLOAD_SIZE:
+        raise HTTPException(status_code=413, detail="File exceeds the 10 MB limit.")
+
+    try:
+        indexed_chunks = index_uploaded_file(
+            file.filename,
+            content,
+            user["role"],
+            user["username"],
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    return {
+        "filename": file.filename.replace("\\", "/").rsplit("/", 1)[-1],
+        "indexed_chunks": indexed_chunks,
+        "access_level": user["role"],
+        "visible_to": accessible_document_levels(user["role"]),
     }
 
 

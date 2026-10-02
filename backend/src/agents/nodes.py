@@ -5,7 +5,7 @@ from typing import List
 from agents.prompts import custom_rag_prompt
 from agents.states import State, AnswerWithSources
 from config import Config, get_vector_db_path
-from rbac import can_access_documents, is_valid_role
+from rbac import accessible_document_levels, can_access_documents, is_valid_role
 
 from langchain.chat_models import init_chat_model
 from langchain_chroma import Chroma
@@ -13,6 +13,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
 
 from dotenv import load_dotenv
+from google.api_core.exceptions import ResourceExhausted
 
 load_dotenv()
 
@@ -82,6 +83,18 @@ def generate(state: State):
             "answer": AnswerWithSources(
                 answer=answer.strip(),
                 sources=sources
+            )
+        }
+    except ResourceExhausted:
+        print("ERROR: Gemini answer-generation quota is exhausted")
+        return {
+            "answer": AnswerWithSources(
+                answer=(
+                    "The Gemini answer-generation quota is currently exhausted. "
+                    "Your document was indexed successfully; check your Google AI "
+                    "Studio quota or try again after the quota resets."
+                ),
+                sources=[]
             )
         }
     except Exception as e:
@@ -176,9 +189,9 @@ def retrieve(state: State):
     # ============================================================
 
     try:
-        # For c_level users, no metadata filter (access all docs)
+        # Higher roles can retrieve documents uploaded by lower roles.
         query_filter = None if access_level == "c_level" else {
-            "access_level": access_level
+            "access_level": {"$in": accessible_document_levels(access_level)}
         }
 
         retrieved_docs = vector_store.similarity_search(
@@ -222,7 +235,7 @@ def retrieve(state: State):
     if access_level == "hr":
         try:
             all_hr_data = vector_store._collection.get(
-                where={"access_level": "hr"},
+                where={"access_level": {"$in": accessible_document_levels(access_level)}},
                 include=["documents", "metadatas"]
             )
             documents = all_hr_data.get("documents", [])

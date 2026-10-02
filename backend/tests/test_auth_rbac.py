@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 
 from auth import authenticate_user, create_access_token
 from main import app
-from rbac import can_access_documents, is_valid_role
+from rbac import accessible_document_levels, can_access_documents, is_valid_role
 
 
 def test_valid_login_returns_bearer_token():
@@ -27,8 +27,12 @@ def test_roles_are_centralized_and_scoped():
     assert is_valid_role("c_level")
     assert not is_valid_role("marketing")
     assert can_access_documents("hr", "hr")
+    assert can_access_documents("hr", "engineering")
     assert not can_access_documents("engineering", "hr")
     assert can_access_documents("c_level", "hr")
+    assert accessible_document_levels("engineering") == ["engineering"]
+    assert accessible_document_levels("hr") == ["engineering", "hr"]
+    assert accessible_document_levels("c_level") == ["engineering", "hr", "c_level"]
 
 
 def test_token_role_is_issued_from_user_store():

@@ -1,12 +1,12 @@
-# FinSolve Technologies Engineering Document
+# RBAC-RAG chatbot Engineering Document
 
 ## 1. Introduction
 
 ### 1.1 Company Overview
-FinSolve Technologies is a leading FinTech company headquartered in Bangalore, India, with operations across North America, Europe, and Asia-Pacific. Founded in 2018, FinSolve provides innovative financial solutions, including digital banking, payment processing, wealth management, and enterprise financial analytics, serving over 2 million individual users and 10,000 businesses globally.
+RBAC-RAG chatbot is a leading FinTech company headquartered in Bangalore, India, with operations across North America, Europe, and Asia-Pacific. Founded in 2018, RBAC-RAG chatbot provides innovative financial solutions, including digital banking, payment processing, wealth management, and enterprise financial analytics, serving over 2 million individual users and 10,000 businesses globally.
 
 ### 1.2 Purpose
-This engineering document outlines the technical architecture, development processes, and operational guidelines for FinSolve's product ecosystem. It serves as a comprehensive guide for engineering teams, stakeholders, and partners to ensure alignment with FinSolve's mission: "To empower financial freedom through secure, scalable, and innovative technology solutions."
+This engineering document outlines the technical architecture, development processes, and operational guidelines for RBAC-RAG chatbot's product ecosystem. It serves as a comprehensive guide for engineering teams, stakeholders, and partners to ensure alignment with RBAC-RAG chatbot's mission: "To empower financial freedom through secure, scalable, and innovative technology solutions."
 
 ### 1.3 Scope
 This document covers:
@@ -30,7 +30,7 @@ This document covers:
 ## 2. System Architecture
 
 ### 2.1 Overview
-FinSolve's architecture is a microservices-based, cloud-native system designed for scalability, resilience, and security. It leverages a modular design to support rapid feature development and seamless integration with third-party financial systems (e.g., payment gateways, credit bureaus, regulatory reporting systems).
+RBAC-RAG chatbot's architecture is a microservices-based, cloud-native system designed for scalability, resilience, and security. It leverages a modular design to support rapid feature development and seamless integration with third-party financial systems (e.g., payment gateways, credit bureaus, regulatory reporting systems).
 
 ### 2.2 High-Level Architecture
 ```
@@ -171,7 +171,7 @@ FinSolve's architecture is a microservices-based, cloud-native system designed f
 ## 4. Software Development Lifecycle (SDLC)
 
 ### 4.1 Agile Methodology
-FinSolve follows a Scrum-based Agile process with 2-week sprints:
+RBAC-RAG chatbot follows a Scrum-based Agile process with 2-week sprints:
 
 #### 4.1.1 Scrum Ceremonies
 * **Sprint Planning**: Product owners and engineering leads define sprint goals and prioritize tasks (4 hours).
@@ -743,14 +743,14 @@ FinSolve follows a Scrum-based Agile process with 2-week sprints:
 
 | Team | Email | Response SLA |
 |------|-------|--------------|
-| Engineering Lead | engineering@finsolve.com | 4 hours |
-| Security Team | security@finsolve.com | 1 hour |
-| DevOps Support | devops@finsolve.com | 2 hours |
-| Data Protection Officer | dpo@finsolve.com | 24 hours |
-| API Support | api-support@finsolve.com | 8 hours |
+| Engineering Lead | engineering@rbac-rag.example.com | 4 hours |
+| Security Team | security@rbac-rag.example.com | 1 hour |
+| DevOps Support | devops@rbac-rag.example.com | 2 hours |
+| Data Protection Officer | dpo@rbac-rag.example.com | 24 hours |
+| API Support | api-support@rbac-rag.example.com | 8 hours |
 
 ---
 
-*Note: This document is a living artifact and will be updated quarterly to reflect changes in architecture, processes, or technologies. For clarifications, contact the Engineering Lead at engineering@finsolve.com.*
+*Note: This document is a living artifact and will be updated quarterly to reflect changes in architecture, processes, or technologies. For clarifications, contact the Engineering Lead at engineering@rbac-rag.example.com.*
 
 *Last Updated: May 14, 2025*

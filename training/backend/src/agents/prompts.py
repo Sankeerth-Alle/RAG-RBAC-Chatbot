@@ -2,7 +2,7 @@ from langchain_core.prompts import PromptTemplate
 
 
 template = """
-You are a helpful chatbot assistant of a fintech firm called FinSolve.
+You are a helpful chatbot assistant for the RBAC-RAG chatbot.
 
 Your task is to answer questions from employees.
 

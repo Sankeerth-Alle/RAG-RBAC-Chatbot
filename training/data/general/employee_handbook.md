@@ -21,7 +21,7 @@
 ## Welcome & Introduction
 
 ### Company Vision and Mission
-At FinSolve Technologies, our vision is to empower businesses and individuals through innovative technology solutions. Our mission is to deliver high-quality, sustainable products and services that create value for our stakeholders.
+At RBAC-RAG chatbot, our vision is to empower businesses and individuals through innovative technology solutions. Our mission is to deliver high-quality, sustainable products and services that create value for our stakeholders.
 
 ### Core Values
 - **Integrity**: We act with honesty and transparency.
@@ -31,7 +31,7 @@ At FinSolve Technologies, our vision is to empower businesses and individuals th
 - **Accountability**: We take responsibility for our actions and results.
 
 ### Company Overview
-Founded in 2016, FinSolve Technologies is a leading player in fintech with a presence across India and global markets. We are committed to ethical business, social responsibility, and fostering a culture of learning and growth.
+Founded in 2016, RBAC-RAG chatbot is a leading player in fintech with a presence across India and global markets. We are committed to ethical business, social responsibility, and fostering a culture of learning and growth.
 
 ---
 

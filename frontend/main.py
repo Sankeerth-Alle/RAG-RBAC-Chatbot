@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 st.set_page_config(
-    page_title="FinSolve Technologies Chatbot",
+    page_title="RBAC-RAG chatbot",
     page_icon="🤖",
 )
 
@@ -51,7 +51,7 @@ def authorization_headers():
 
 # Authentication page
 if not st.session_state.authenticated:
-    st.title("🔐 Login to FinSolve Technologies Chatbot")
+    st.title("🔐 Login to RBAC-RAG chatbot")
     st.markdown("Please enter your credentials to access the chatbot.")
 
     with st.form("login_form"):
@@ -76,7 +76,7 @@ else:
     # Header with logout option
     col1, col2 = st.columns([3, 1])
     with col1:
-        st.title("🤖 FinSolve Technologies Chatbot")
+        st.title("🤖 RBAC-RAG chatbot")
         st.markdown(
             f"Welcome, **{st.session_state.username}**! Ask me anything about our knowledge base.")
     with col2:

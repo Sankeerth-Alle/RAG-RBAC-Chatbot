@@ -1,6 +1,6 @@
 from langchain_core.prompts import PromptTemplate
 
-template = """You are a helpful chatbot assistant for FinSolve Technologies, a fintech company.
+template = """You are a helpful chatbot assistant for the RBAC-RAG chatbot.
 Answer the question using only the authorized context below.
 
 Instructions:

@@ -1,4 +1,4 @@
-# FinSolve RBAC-RAG Chatbot
+# RBAC-RAG Chatbot
 
 A small academic demonstration of role-based retrieval with FastAPI, LangGraph, Chroma, Gemini, and Streamlit.
 
